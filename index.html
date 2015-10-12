@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>Blank</title>
+    <title>MicroBlog</title>
 
     <!-- STYLESHEETS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -21,7 +21,15 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
-          <h1>We're in good shape.</h1>
+          <h1>Your Microblog</h1>
+          <form>
+            <input type="text" size = "70"id = "words"placeholder = "What's on your mind?"></br>
+            <input id = "submission" type="submit" value = "Post!">
+          </form>
+          <div> 
+              <ul id = "list-storer">
+              </ul>
+          </div>
         </div>
       </div>
     </div>
