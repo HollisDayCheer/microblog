@@ -11,13 +11,20 @@ console.log("Sanity Check: JS is working!");
     this.removeItem = function(index){  //removes an item based on position + resests position
       for(var i = index; i<this.items.length-1;i++){
          this.items[i]=this.items[i+1];
+         console.log(this.items[i]);
+         this.items[i].position=i;
+         console.log(i);
       }
-        this.items.pop(); 
+      this.items.pop();
+      localStorage.setItem("ourItem", JSON.stringify(this));
+      this.numbPosts--;
+      this.updateEntries();
    },
    this.addItem =function(listEntry){ //adds an item to the EntryList object
       listEntry.position = this.items.length;
       this.items.push(listEntry);
-      $("#list-storer").append(listEntry.html);
+      $("#list-storer").append("<li class= 'list-group-item "+listEntry.position+"'>"+ listEntry.text + "<button class = '"+listEntry.position+"'>X</button></li>"
+);
       $("#words").val(""); //clears the input
       entryString = "entry" + this.items.length;
       this.numbPosts++;
@@ -29,14 +36,14 @@ console.log("Sanity Check: JS is working!");
   }
   this.updateEntries = function(){ //created this because was getting issues with html being off from the position of the actual html id
     //this entire thing ended up being unnecessary because I couldn't get my button clicks working :(
-    $("#list-storer").clear();
-    for(var i = index; i<this.items.length;i++){
-      $("#list-storer").append(this.items[i].html);
+    $("#list-storer").empty();
+    for(var i = 0; i<this.items.length;i++){
+      $("#list-storer").append("<li class= 'list-group-item "+this.items[i].position+"'>"+ this.items[i].text + "<button class = '"+this.items[i].position+"'>X</button></li>");
     }
   }
 
   this.updateHTML = function(){
-    $("#list-storer").clear();
+    $("#list-storer").empty();
     for(var i = 0; i<this.items.length;i++){
       $("#list-storer").append(this.items[i].html);
     }
@@ -45,9 +52,8 @@ console.log("Sanity Check: JS is working!");
 
 
 
-  var entry = function(words){ //entry object, holds position and two types of text
-    this.text = words,
-    this.html = "<li class= 'list-group-item'>"+ this.text + "<button>X</button></li>"
+  var entry = function(words){ //entry object, once held html and position, but that was moved to EntryList. 
+    this.text = words
   }
   var ourList = new EntryList();
 
@@ -59,6 +65,7 @@ console.log("Sanity Check: JS is working!");
         var newEntry = new entry(newText);
         ourList.addItem(newEntry);
       }
+    ourList.numbPosts = ourObject.items.length;
     }
 }
 $(document).ready(function(){
@@ -75,7 +82,12 @@ $(document).ready(function(){
   });
 
   $("button").on("click", function(e){
-    console.log("this works");
+    console.log("click works on button");
+    var myClass = $(this).attr('class');
+    var classString = "." + myClass;
+    $(classString).remove();
+    console.log(myClass);
+    ourList.removeItem(myClass);
   })
 
  
