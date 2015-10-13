@@ -23,8 +23,7 @@ console.log("Sanity Check: JS is working!");
    this.addItem =function(listEntry){ //adds an item to the EntryList object
       listEntry.position = this.items.length;
       this.items.push(listEntry);
-      $("#list-storer").append("<li class= 'list-group-item "+listEntry.position+"'>"+ listEntry.text + "<button class = '"+listEntry.position+"'>X</button></li>"
-);
+      $("#list-storer").append("<li class= 'list-group-item "+listEntry.position+"'>"+ listEntry.text + "<button class = '"+listEntry.position+"'>X</button></br></li>");
       $("#words").val(""); //clears the input
       entryString = "entry" + this.items.length;
       this.numbPosts++;
@@ -39,7 +38,7 @@ console.log("Sanity Check: JS is working!");
     $("#list-storer").empty();
     for(var i = 0; i<this.items.length;i++){
       $("#list-storer").append("<li class= 'list-group-item "+this.items[i].position+"'>"+ this.items[i].text + "<button class = '"+this.items[i].position+"'>X</button></li>");
-    }
+    }$("li.'"+this.items[i].position+"'").append("hahahaha");
   }
 
   this.updateHTML = function(){
@@ -71,6 +70,12 @@ console.log("Sanity Check: JS is working!");
 $(document).ready(function(){
   startUp();
   // code in here
+    $('[id^=detail-]').hide();
+    $('.toggle').click(function() {
+        $input = $( this );
+        $target = $('#'+$input.attr('data-toggle'));
+        $target.slideToggle();
+    });
 
   $("form").on("submit", function(e){ //on submission, adds the text to an entry and adds the entry to an Entrylist
       e.preventDefault();
